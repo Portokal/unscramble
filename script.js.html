@@ -1,0 +1,38 @@
+const words = ['bukhali']; // The word to unscramble
+let currentWord, scrambledWord;
+
+function selectRandomWord() {
+    return words[Math.floor(Math.random() * words.length)];
+}
+
+function scrambleWord(word) {
+    return word.split('').sort(() => Math.random() - 0.5).join('');
+}
+
+function displayScrambledWord() {
+    currentWord = selectRandomWord();
+    scrambledWord = scrambleWord(currentWord);
+    document.getElementById('word').innerText = scrambledWord;
+}
+
+function checkGuess() {
+    const guess = document.getElementById('guess').value.toLowerCase();
+    if (guess === currentWord) {
+        document.getElementById('message').innerText = "Correct! You're bukhali!";
+        document.getElementById('definition').innerHTML = "<br><br>Smart or powerful <br>Bukhali means smart or powerful in isiZulu (commonly spoken language in Soweto), with the catchphrase of ‘Living your best life’. <br><br><a href='https://ncbi.nlm.nih.gov/pmc/articles/PMC10007644/'>ncbi.nlm.nih.gov/pmc/articles/PMC10007644/</a>";
+        document.getElementById('definition-container').style.display = 'block';
+    } else {
+        document.getElementById('message').innerText = 'Incorrect. Try again!';
+        document.getElementById('definition-container').style.display = 'none';
+    }
+}
+
+document.getElementById('submit').addEventListener('click', checkGuess);
+document.getElementById('reset').addEventListener('click', () => {
+    displayScrambledWord();
+    document.getElementById('guess').value = '';
+    document.getElementById('message').innerText = '';
+    document.getElementById('definition-container').style.display = 'none';
+});
+
+displayScrambledWord();
